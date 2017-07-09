@@ -1,0 +1,14 @@
+{
+    "name": "wasfapp/mobily-api",
+    "minimum-stability":"dev",
+    "description": "A short description of what your package does",
+    "require": {
+        "php": "^5.3.3 || ^7.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git://github.com/wasfapp/mobily-api/blob/master/mobily_sms.inc"
+        }
+    ]
+}
