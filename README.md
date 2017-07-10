@@ -11,20 +11,20 @@ typing **composer require "wasfapp/mobily-api:dev-master"** in command line usin
 
 ## Quickstart
 
-### TO USE APi AFTER DOWNLOAD
- In order to use Mobily API, you must take the following steps:
+### TO USE Api AFTER DOWNLOAD
+ In order to use Mobily Api, you must take the following steps:
  1. Registration on the site through the following steps:
     
     1. Go to the following link: **[`mobily.ws`](http://www.mobily.ws/sms/index.php)**
-    2. Go to page (now) at the top of the page
+    2. Go to page (Register now) at the top of the page
     3. Enter the information
     5. Enable sender name to send messages
- 2. Download the Mobily API and install it in your system
- 3. We enter user information (APIKEY or mobile and password). This information is provided to you by the site
+ 2. Download the Mobily Api and install it in your system
+ 3. Insert user information (ApiKEY or mobile and password) ,this information's is provided to you by the site
  In the function setInfo defines user information
 
-### Mobily API Portals
-We provide many services that make it easy to use the api, and these some of the services: 
+### Mobily Api Portals
+We provide many services that make it easy to use the api, and these are some our of the services: 
 1. send sms
 2. send sms using message template 
 3. sending sms directly
@@ -46,22 +46,11 @@ You can  send SMS messages using the transmission gate to ensure the privacy of 
 ```php
 <?php
 require_once('Mobily_sms.inc');
-$sms = new MobilySms('user name','password','APIKEY');
+$sms = new MobilySms('user name','password','ApiKEY');
 $result=$sms->sendMsg('This is Message','9662222222222,9662222222222,9662222222222','NEW SMS','17:30:00','12/30/2017',1,'deleteKey','curl');
 ?>
 
 ```
-**OR**
-
-```php
-<?php
-require_once('Mobily_sms.inc');
-$sms = new MobilySms();
-$result=$sms->setInfo('user name','password','APIKEY');
-$result=$sms->sendMsg('This is Message','9662222222222,9662222222222,9662222222222','NEW SMS','17:30:00','12/30/2017',1,'deleteKey','curl');
-?>
-```
-
 
 ### Send SMS using message Template
 This portal offers the ability to send SMS messages using a unified message template for different numbers. This portal allows you to add fixed message text and put symbols in it. This portal transmits the information of each number with the symbols in the message to form a message for each number. the operation :
@@ -69,7 +58,7 @@ This portal offers the ability to send SMS messages using a unified message temp
 ```php
 <?php
 require_once('Mobily_sms.inc');
-$sms = new MobilySms('user name','password','APIKEY');
+$sms = new MobilySms('user name','password','ApiKEY');
 $msg = "Welcome (1)، Your subscription date is up to (2)";
 $msgKey = "(1),*,William,@,(2),*,12/10/2008***(1),*,jack,@,(2),*,10/10/2008";
 $numbers='96622222222222,96622222222222';
@@ -77,100 +66,46 @@ $result=$sms->sendMsgWK($msg,$numbers,'aljauoni',$msgKey,'12:00:00','12/27/2017'
 
 ?>
 ```
-**OR**
-
-
-```php
-<?php
-require_once('Mobily_sms.inc');
-$sms = new MobilySms();
-$msg = "Welcome (1)، Your subscription date is up to (2)";
-$msgKey = "(1),*,William,@,(2),*,12/10/2008***(1),*,jack,@,(2),*,10/10/2008";
-$numbers='96622222222222,96622222222222';
-$result=$sms->setInfo('user name','password','APIKEY');
-$result=$sms->sendMsgWK($msg,$numbers,'aljauoni',$msgKey,'12:00:00','12/27/2017',0,'deleteKey','curl');
-?>
-```
-
 
 ### Balance Inquiry
-You can inquire about mobily account balance through this portal by adding mobile number or API KEY , this portal sends and returns JSON data and the following example shows how to use this portal :
+You can inquire about mobily account balance through this portal by adding mobile number or Api KEY , this portal sends and returns JSON data and the following example shows how to use this portal :
 ```php
 <?php
 require_once('Mobily_sms.inc');
-$sms = new MobilySms('user name','password','APIKEY');
-$result=$sms->balance('curl');
-?>
-```
-**OR**
-
-
-```php
-<?php
-require_once('Mobily_sms.inc');
-$sms = new MobilySms();
-$result=$sms->setInfo('user name','password','APIKEY');
+$sms = new MobilySms('user name','password','ApiKEY');
 $result=$sms->balance('curl');
 ?>
 ```
 
 ### Forget Password
-You can retrieve the mobily account password through this portal by adding the mobile number or API KEY to retrieve its password and the way to send the password either on the mobile number or on the email of the account, and this portal sends and returns data from JSON Type The following example shows how to use this portal:
+You can retrieve the mobily account password through this portal by adding the mobile number or Api KEY to retrieve its password and the way to send the password either on the mobile number or on the email of the account, and this portal sends and returns data from JSON Type The following example shows how to use this portal:
 ```php
 <?php
 require_once('Mobily_sms.inc');
-// you must insert just user name or APIKEY
-$sms = new MobilySms('user name','password','APIKEY');
+// you must insert just user name or ApiKEY
+$sms = new MobilySms('user name','password','ApiKEY');
 // 1: that means send password to account mobile
 $result=$sms->forgetPassword(1,'ar','curl');
 // or you can use
 // 2: that means send password to account email 
 $result=$sms->forgetPassword(2,'ar','curl');
 
-?>
-```
-**OR**
-
-
-```php
-<?php
-require_once('Mobily_sms.inc');
-$sms = new MobilySms();
-// you must insert just user name or APIKEY
-$result=$sms->setInfo('user name','password','APIKEY');
-// 1: that means send password to account mobile
-$result=$sms->forgetPassword(1,'ar','curl');
-// or you can use
-// 2: that means send password to account email 
-$result=$sms->forgetPassword(2,'ar','curl');
 ?>
 ```
 
 ### Change Password
-You can change the password for mobily account through this portal by adding the mobile number or API KEY to change its password and old and new password, and this portal sends and returns data of type JSON. , And as an example of the required data:
+You can change the password for mobily account through this portal by adding the mobile number or Api KEY to change its password and old and new password, and this portal sends and returns data of type JSON. , And as an example of the required data:
 ```php
 <?php
 require_once('Mobily_sms.inc');
-$sms = new MobilySms('user name','password','APIKEY');
+$sms = new MobilySms('user name','password','ApiKEY');
 $result=$sms->changePassword('111','123','curl');
 
 ?>
 ```
-**OR**
-
-
-```php
-<?php
-require_once('Mobily_sms.inc');
-$sms = new MobilySms();
-$result=$sms->setInfo('user name','password','APIKEY');
-$result=$sms->changePassword('111','123','curl');
-?>
-```
-
 ## Documentation
 
-The documentation for the **mobily.ws API** is located **[`here`](http://www.mobily.ws/)**.
+The documentation for the **mobily.ws Api** is located **[`here`](http://www.mobily.ws/)**.
 
 The PHP library documentation can be found **[`here`](http://www.mobily.ws/)**.
 
