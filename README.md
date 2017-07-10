@@ -1,90 +1,182 @@
-[![Build Status](https://secure.travis-ci.org/twilio/twilio-php.png?branch=master)](http://travis-ci.org/twilio/twilio-php)
-[![Packagist](https://img.shields.io/packagist/v/twilio/sdk.svg)](https://packagist.org/packages/twilio/sdk)
-[![Packagist](https://img.shields.io/packagist/dt/twilio/sdk.svg)](https://packagist.org/packages/twilio/sdk)
 
 ## Installation
 
-You can install **twilio-php** via composer or by downloading the source.
+You can install **mobily-api** via composer or by 
+typing **composer require "wasfapp/mobily-api:dev-master"** in command line using composer.
 
 #### Via Composer:
 
-**twilio-php** is available on Packagist as the
-[`twilio/sdk`](http://packagist.org/packages/twilio/sdk) package.
+**mobily-api** is available on Packagist as the
+[`wasfapp/mobily-api`](https://packagist.org/packages/wasfapp/mobily-api) package.
 
 ## Quickstart
 
-### Send an SMS
+### TO USE APi AFTER DOWNLOAD
+ In order to use Mobily API, you must take the following steps:
+ 1. Registration on the site through the following steps:
+    
+    1. Go to the following link: **[`mobily.ws`](http://www.mobily.ws/sms/index.php)**
+    2. Go to page (now) at the top of the page
+    3. Enter the information
+    5. Enable sender name to send messages
+ 2. Download the Mobily API and install it in your system
+ 3. We enter user information (APIKEY or mobile and password). This information is provided to you by the site
+ In the function setInfo defines user information
 
+### Mobily API Portals
+We provide many services that make it easy to use the api, and these some of the services: 
+1. send sms
+2. send sms using message template 
+3. sending sms directly
+4. sending status
+5. Add mobile number as sender name
+6. Activate mobile number as sender name
+7. Check that the mobile number is activated as a sender's name
+8. Possibility to change password
+9. Retrieve password
+10. Balance Inquiry
+11. Delete sms
+12. Add a text sender name
+13. Activate the text sender name
+
+## Services Example
+
+### Send SMS message
+You can  send SMS messages using the transmission gate to ensure the privacy of information and the speed of sending and ensure they arrive, and this portal provid the ability to sending messages to many numbers at once and without any effortless and tired, is the gate to send and receive messages using JSON technology And These an example of how to use the portal:
 ```php
-// Send an SMS using Twilio's REST API and PHP
 <?php
-$sid = "ACXXXXXX"; // Your Account SID from www.twilio.com/console
-$token = "YYYYYY"; // Your Auth Token from www.twilio.com/console
+require_once('Mobily_sms.inc');
+$sms = new MobilySms('user name','password','APIKEY');
+$result=$sms->sendMsg('This is Message','9662222222222,9662222222222,9662222222222','NEW SMS','17:30:00','12/30/2017',1,'deleteKey','curl');
+?>
 
-$client = new Twilio\Rest\Client($sid, $token);
-$message = $client->messages->create(
-  '8881231234', // Text this number
-  array(
-    'from' => '9991231234', // From a valid Twilio number
-    'body' => 'Hello from Twilio!'
-  )
-);
-
-print $message->sid;
 ```
-
-### Make a Call
-
-```php
-<?php
-$sid = "ACXXXXXX"; // Your Account SID from www.twilio.com/console
-$token = "YYYYYY"; // Your Auth Token from www.twilio.com/console
-
-$client = new Twilio\Rest\Client($sid, $token);
-
-// Read TwiML at this URL when a call connects (hold music)
-$call = $client->calls->create(
-  '8881231234', // Call this number
-  '9991231234', // From a valid Twilio number
-  array(
-      'url' => 'https://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient'
-  )
-);
-```
-
-### Generating TwiML
-
-To control phone calls, your application needs to output
-[TwiML](https://www.twilio.com/docs/api/twiml/ "Twilio Markup Language"). Use
-`Twilio\Twiml` to easily create such responses.
+**OR**
 
 ```php
 <?php
-$response = new Twilio\Twiml();
-$response->say('Hello');
-$response->play('https://api.twilio.com/cowbell.mp3', array("loop" => 5));
-print $response;
+require_once('Mobily_sms.inc');
+$sms = new MobilySms();
+$result=$sms->setInfo('user name','password','APIKEY');
+$result=$sms->sendMsg('This is Message','9662222222222,9662222222222,9662222222222','NEW SMS','17:30:00','12/30/2017',1,'deleteKey','curl');
+?>
 ```
 
-That will output XML that looks like this:
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<Response>
-    <Say>Hello</Say>
-    <Play loop="5">https://api.twilio.com/cowbell.mp3</Play>
-<Response>
+### Send SMS using message Template
+This portal offers the ability to send SMS messages using a unified message template for different numbers. This portal allows you to add fixed message text and put symbols in it. This portal transmits the information of each number with the symbols in the message to form a message for each number. the operation :
+
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms('user name','password','APIKEY');
+$msg = "Welcome (1)، Your subscription date is up to (2)";
+$msgKey = "(1),*,William,@,(2),*,12/10/2008***(1),*,jack,@,(2),*,10/10/2008";
+$numbers='96622222222222,96622222222222';
+$result=$sms->sendMsgWK($msg,$numbers,'aljauoni',$msgKey,'12:00:00','12/27/2017',0,'deleteKey','curl');
+
+?>
+```
+**OR**
+
+
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms();
+$msg = "Welcome (1)، Your subscription date is up to (2)";
+$msgKey = "(1),*,William,@,(2),*,12/10/2008***(1),*,jack,@,(2),*,10/10/2008";
+$numbers='96622222222222,96622222222222';
+$result=$sms->setInfo('user name','password','APIKEY');
+$result=$sms->sendMsgWK($msg,$numbers,'aljauoni',$msgKey,'12:00:00','12/27/2017',0,'deleteKey','curl');
+?>
+```
+
+
+### Balance Inquiry
+You can inquire about mobily account balance through this portal by adding mobile number or API KEY , this portal sends and returns JSON data and the following example shows how to use this portal :
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms('user name','password','APIKEY');
+$result=$sms->balance('curl');
+?>
+```
+**OR**
+
+
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms();
+$result=$sms->setInfo('user name','password','APIKEY');
+$result=$sms->balance('curl');
+?>
+```
+
+### Forget Password
+You can retrieve the mobily account password through this portal by adding the mobile number or API KEY to retrieve its password and the way to send the password either on the mobile number or on the email of the account, and this portal sends and returns data from JSON Type The following example shows how to use this portal:
+```php
+<?php
+require_once('Mobily_sms.inc');
+// you must insert just user name or APIKEY
+$sms = new MobilySms('user name','password','APIKEY');
+// 1: that means send password to account mobile
+$result=$sms->forgetPassword(1,'ar','curl');
+// or you can use
+// 2: that means send password to account email 
+$result=$sms->forgetPassword(2,'ar','curl');
+
+?>
+```
+**OR**
+
+
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms();
+// you must insert just user name or APIKEY
+$result=$sms->setInfo('user name','password','APIKEY');
+// 1: that means send password to account mobile
+$result=$sms->forgetPassword(1,'ar','curl');
+// or you can use
+// 2: that means send password to account email 
+$result=$sms->forgetPassword(2,'ar','curl');
+?>
+```
+
+### Change Password
+You can change the password for mobily account through this portal by adding the mobile number or API KEY to change its password and old and new password, and this portal sends and returns data of type JSON. , And as an example of the required data:
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms('user name','password','APIKEY');
+$result=$sms->changePassword('111','123','curl');
+
+?>
+```
+**OR**
+
+
+```php
+<?php
+require_once('Mobily_sms.inc');
+$sms = new MobilySms();
+$result=$sms->setInfo('user name','password','APIKEY');
+$result=$sms->changePassword('111','123','curl');
+?>
 ```
 
 ## Documentation
 
-The documentation for the Twilio API is located [here][apidocs].
+The documentation for the **mobily.ws API** is located **[`here`](http://www.mobily.ws/)**.
 
-The PHP library documentation can be found [here][documentation].
+The PHP library documentation can be found **[`here`](http://www.mobily.ws/)**.
 
 ## Versions
 
-`twilio-php`'s versioning strategy can be found [here][versioning].
+`Mobily-api`'s versioning strategy can be found **[`here`](http://www.mobily.ws/)**.
 
 ## Prerequisites
 
@@ -93,10 +185,6 @@ The PHP library documentation can be found [here][documentation].
 
 # Getting help
 
-If you need help installing or using the library, please contact Twilio Support at help@twilio.com first. Twilio's Support staff are well-versed in all of the Twilio Helper Libraries, and usually reply within 24 hours.
+If you need help installing or using the library, please contact Mobily.ws Support at **help@mobily.ws** first. mobily Support staff are well-versed in all of the mobily.ws Helper Libraries, and usually reply within 24 hours.
 
 If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
-
-[apidocs]: https://twilio.com/api/docs
-[documentation]: https://twilio.github.io/twilio-php/
-[versioning]: https://github.com/twilio/twilio-php/blob/master/VERSIONS.md
